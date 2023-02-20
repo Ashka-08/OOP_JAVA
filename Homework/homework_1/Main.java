@@ -1,5 +1,7 @@
 package Homework.homework_1;
 
+import java.util.Scanner;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -37,5 +39,12 @@ public class Main {
         human3.setPartner(human6);
         human3.addChild(human5);        
         human3.getChildren();
+
+        System.out.println("-------");
+        Scanner iScanner = new Scanner(System.in, "Cp866");
+        System.out.print("Введите имя для поиска: ");
+        String searchName = iScanner.next();
+        iScanner.close();
+        bigFamily.searchPeople(searchName);
     }   
 }

@@ -16,6 +16,21 @@ public class GenealogicalTree {
     public void addHuman(Human somebody) {
         allPeople.add(somebody);
     }
+    
+    /**
+     * Метод поиска человека по имени и его детей
+     * @param searchName принимает введенное пользователем значение 
+     */
+    public void searchPeople (String searchName) {
+        for (Human human : allPeople) {
+            if (!human.getName().equalsIgnoreCase(searchName)) {
+                System.out.println("Совпадений не найдено");
+            } else {
+                System.out.printf("Результат поиска: %s\n", human.getName());
+                human.getChildren();
+            }
+        }
+    }
 
     /**
      * Метод печати всех человек из генеалогического древа
