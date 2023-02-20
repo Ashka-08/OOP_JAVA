@@ -45,6 +45,12 @@ public class Main {
         System.out.print("Введите имя для поиска: ");
         String searchName = iScanner.next();
         iScanner.close();
-        bigFamily.searchPeople(searchName);
+
+        if (bigFamily.searchPeople(searchName) == null) {
+            System.out.println("Совпадений не найдено");
+        } else {
+            System.out.printf("Результат поиска: %s найден\n", bigFamily.searchPeople(searchName).getName());
+            bigFamily.searchPeople(searchName).getChildren();
+        }
     }   
 }
