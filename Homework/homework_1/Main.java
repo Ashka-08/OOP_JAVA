@@ -13,6 +13,8 @@ public class Main {
         Human human5 = new Human("Юрий", Sex.Man, "17.02.2022");
         Human human6 = new Human("Инна", Sex.Woman, "16.08.1999");
 
+        human2.setName("Анна");
+
         GenealogicalTree bigFamily = new GenealogicalTree();
         bigFamily.addHuman(human1);
         bigFamily.addHuman(human2);

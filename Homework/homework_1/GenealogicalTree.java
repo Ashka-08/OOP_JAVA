@@ -24,7 +24,6 @@ public class GenealogicalTree {
     public Human searchPeople (String searchName) {
         for (Human human : allPeople) {
             if (human.getName().equals(searchName)) {
-                System.out.printf("Результат поиска: %s\n", human.getName());
                 return human;
             } 
         }

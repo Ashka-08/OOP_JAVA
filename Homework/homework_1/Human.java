@@ -19,7 +19,7 @@ public class Human {
     }
 
     public Human() {
-        this(null, null, null);
+        this("Не установлено", null, null);
     }
 
     public Human(String name) {
