@@ -16,7 +16,8 @@ public class Main {
 
         human2.setName("Анна");
 
-        GenealogicalTree bigFamily = new GenealogicalTree();
+        FileHandler fileHandler = new FileHandler();
+        GenealogicalTree bigFamily = new GenealogicalTree(fileHandler);
         bigFamily.addHuman(human1);
         bigFamily.addHuman(human2);
         bigFamily.addHuman(human3);
@@ -46,18 +47,15 @@ public class Main {
         human6.setPartner(human3);
         human3.addChild(human5);        
         human3.getChildren();
+        System.out.println("-------");
 
         
         // Scanner iScanner = new Scanner(System.in, "Cp866");
         // searchChild(iScanner, bigFamily);
         // iScanner.close();
         
-        bigFamily.save("GenealogicalTree.out");
-        
-        GenealogicalTree deserializationTree = new GenealogicalTree();
-        deserializationTree.read("GenealogicalTree.out");
-        deserializationTree.printGenTree();
-        
+        fileHandler.save(bigFamily);
+        fileHandler.read();
     }
 
     public static void searchChild(Scanner iScanner, GenealogicalTree bigFamily) {

@@ -1,8 +1,8 @@
 package Homework.Homework_2;
 
-import java.io.IOException;
+import java.io.Serializable;
 
 public interface Writable {
-    void save(String Path);
-    Object read(String path) throws IOException;
+    void save(Serializable serializable);
+    GenealogicalTree read();
 }

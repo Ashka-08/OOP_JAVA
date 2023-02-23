@@ -5,13 +5,13 @@ import java.io.IOException;
 import java.io.Serializable;
 
 
-public class GenealogicalTree implements Serializable, Writable{
+public class GenealogicalTree implements Serializable {
     private ArrayList<Human> allPeople;
     private Writable writable;
-    private static final long serialVersionUID = 1L;
 
-    public GenealogicalTree() {
+    public GenealogicalTree(Writable writable) {
         allPeople = new ArrayList<>();
+        this.writable = writable;
     }
 
     /**
@@ -48,30 +48,28 @@ public class GenealogicalTree implements Serializable, Writable{
         return allPeople;
     }
 
-    @Override
-    public void save(String path) {
-        if (writable instanceof FileHandler) {
-            FileHandler fileHandler = (FileHandler) writable;
-            fileHandler.save(path);
-        }
-        if (writable != null){
-            writable.save("database.xml");
-        }  
-    }
-
-    @Override
-    public Object read(String path) throws IOException {
-        if (writable instanceof FileHandler) {
-            FileHandler fileHandler = (FileHandler) writable;
-            return fileHandler.read(path);
-        }
-        if (writable != null){
-            writable.read("database.xml");
-        }
-        return null;
-    }
-
     public void setWritable(Writable writable) {
         this.writable = writable;
+    }
+
+    public GenealogicalTree readFamilyTree() throws ClassNotFoundException, IOException {
+
+        if (writable != null) {
+            if (writable instanceof FileHandler) {
+
+                if (writable.read() == null) {
+
+                    System.out.println("FamilyTree в файле нет! Создаём новое FamilyTree.");
+                    return new GenealogicalTree(writable);
+                } else {
+                    System.out.println("FamilyTree загружено из файла.");
+                    return (GenealogicalTree) writable.read();
+                }
+            }
+        } else {
+            System.out.println("Файл не загружен!");
+            return null;
+        }
+        return null;
     }
 }
