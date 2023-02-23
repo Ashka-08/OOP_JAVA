@@ -1,9 +1,14 @@
-package Homework.homework_1;
+package Homework.Homework_2;
 
 import java.util.ArrayList;
+import java.io.IOException;
+import java.io.Serializable;
 
-public class GenealogicalTree {
+
+public class GenealogicalTree implements Serializable, Writable{
     private ArrayList<Human> allPeople;
+    private Writable writable;
+    private static final long serialVersionUID = 1L;
 
     public GenealogicalTree() {
         allPeople = new ArrayList<>();
@@ -30,7 +35,6 @@ public class GenealogicalTree {
         return null;
     }
 
-
     /**
      * Метод печати всех человек из генеалогического древа
      */
@@ -42,5 +46,32 @@ public class GenealogicalTree {
 
     public ArrayList<Human> getAllPeople() {
         return allPeople;
+    }
+
+    @Override
+    public void save(String path) {
+        if (writable instanceof FileHandler) {
+            FileHandler fileHandler = (FileHandler) writable;
+            fileHandler.save(path);
+        }
+        if (writable != null){
+            writable.save("database.xml");
+        }  
+    }
+
+    @Override
+    public Object read(String path) throws IOException {
+        if (writable instanceof FileHandler) {
+            FileHandler fileHandler = (FileHandler) writable;
+            return fileHandler.read(path);
+        }
+        if (writable != null){
+            writable.read("database.xml");
+        }
+        return null;
+    }
+
+    public void setWritable(Writable writable) {
+        this.writable = writable;
     }
 }
