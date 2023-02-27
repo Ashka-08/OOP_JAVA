@@ -2,8 +2,7 @@ package Homework.homework_4;
 
 public class Human extends Animal {
 
-    public Human(int id, String name, Sex sex, int birthYear) {
-        super(id, name, sex, birthYear);
+    public Human(String name, Sex sex, int birthYear) {
+        super(name, sex, birthYear);
     }
-    
 }

@@ -6,26 +6,27 @@ import Homework.homework_4.Sex;
 
 import java.util.Collections;
 
-public class GenTreeService<T extends Animal> {
-    private GenealogicalTree<T> genealogicalTree;
+public class GenTreeService {
+    private GenealogicalTree<Human> genealogicalTree;
     private static int idIndividual;
 
-    public GenTreeService(GenealogicalTree<T> genealogicalTree) {
+    public GenTreeService(GenealogicalTree<Human> genealogicalTree) {
         this.genealogicalTree = genealogicalTree;
         idIndividual = 0;
     }
 
     public void addIndividual(String name, Sex sex, int birthYear){
-        T individual = new T (idIndividual++, name, sex, birthYear);
+        Human individual = new Human(idIndividual++, name, sex, birthYear);
         genealogicalTree.addIndividual(individual);
     }
 
-    public void sortByName(GenealogicalTree<T> genealogicalTree) { 
+    public void sortByName(GenealogicalTree<Human> genealogicalTree) { 
         Collections.sort(genealogicalTree.getAllListTree());
     }
 
     public void sortByAge() {
-        Collections.sort(genealogicalTree.getAllListTree(), new IndividualComporatorByAge<T>());        
+        Collections.sort(genealogicalTree.getAllListTree(), 
+            new IndividualComporatorByAge<Human>());        
     }
 }
     

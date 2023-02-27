@@ -1,6 +1,5 @@
 package Homework.homework_4;
 import Homework.homework_4.Service.FileHandler;
-import Homework.homework_4.Service.GenTreeService;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -10,27 +9,35 @@ public class Main {
     public static void main(String[] args) throws FileNotFoundException, IOException {
         FileHandler<Human> fileHandler = new FileHandler<>();
         GenealogicalTree<Human> bigFamily = new GenealogicalTree<>(fileHandler);
-        GenTreeService<Human> genTreeService = new GenTreeService<>(bigFamily);
-        genTreeService.addIndividual("Федор", Sex.Man, 1947);
-        genTreeService.addIndividual("Анна", Sex.Woman, 1949);
-        genTreeService.addIndividual("Александр", Sex.Man, 1999);
-        genTreeService.addIndividual("Мария", Sex.Man, 2003);
-        genTreeService.addIndividual("Юрий", Sex.Man, 2022);
-        genTreeService.addIndividual("Инна", Sex.Woman, 1999);
+        
+        Human human1 = new Human("Федор", Sex.Man, 1947);
+        Human human2 = new Human("Анна", Sex.Woman, 1949);
+        Human human3 = new Human("Александр", Sex.Man, 1999);
+        Human human4 = new Human("Мария", Sex.Woman, 2003);
+        Human human5 = new Human("Юрий", Sex.Man, 2022);
+        Human human6 = new Human("Инна", Sex.Woman, 1999);
+
+        bigFamily.addIndividual(human1);
+        bigFamily.addIndividual(human2);
+        bigFamily.addIndividual(human3);
+        bigFamily.addIndividual(human4);
+        bigFamily.addIndividual(human5);
+        bigFamily.addIndividual(human6);
+
         // bigFamily.printGenTree();
         for (Human human : bigFamily) {
             System.out.println(human);
         }
         System.out.println("-------");
         
-        genTreeService.sortByAge();
+        bigFamily.sortByAge();
         System.out.println("Сортировка по году рождения");
         for (Human human : bigFamily) {
             System.out.println(human);
         }
         System.out.println("-------");
 
-        genTreeService.sortByName(bigFamily);
+        bigFamily.sortByName();
         System.out.println("Сортировка по имени");
         for (Human human : bigFamily) {
             System.out.println(human);

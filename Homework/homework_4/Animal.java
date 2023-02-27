@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Animal implements Serializable, Comparable<Animal> {
-    private int id;
     private String name;
     private Sex sex;
     private int birthYear;
@@ -14,13 +13,12 @@ public class Animal implements Serializable, Comparable<Animal> {
     private Animal partner;
     private List<Animal> children;
 
-    public Animal(int id, String name, Sex sex, int birthYear) {
-        this(id, name, sex, birthYear, null, null, null);
+    public Animal(String name, Sex sex, int birthYear) {
+        this(name, sex, birthYear, null, null, null);
     }
 
-    public Animal(int id, String name, Sex sex, int birthYear, 
+    public Animal(String name, Sex sex, int birthYear, 
     Animal father, Animal mother, Animal partner) {
-        this.id = id;
         this.name = name;
         this.sex = sex;
         this.birthYear = birthYear;
@@ -57,7 +55,7 @@ public class Animal implements Serializable, Comparable<Animal> {
 
     @Override
     public String toString() {
-        return String.format("id %d, %s, пол %s, %s г.р.", id, name, sex, birthYear);
+        return String.format("%s, пол %s, %s г.р.", name, sex, birthYear);
     }
     
     @Override

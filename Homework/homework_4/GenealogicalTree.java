@@ -1,9 +1,11 @@
 package Homework.homework_4;
 import Homework.homework_4.Service.FileHandler;
 import Homework.homework_4.Service.GenTreeIterator;
+import Homework.homework_4.Service.IndividualComporatorByAge;
 import Homework.homework_4.Service.Writable;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.io.IOException;
@@ -26,6 +28,9 @@ public class GenealogicalTree<T extends Animal> implements Serializable, Iterabl
         allListTree.add(somebody);
     }
 
+    public void addIndividual(String string, Sex man, int i) {
+    }
+    
     /**
      * Метод поиска человека по имени и его детей
      * @param searchName принимает введенное пользователем значение 
@@ -48,6 +53,14 @@ public class GenealogicalTree<T extends Animal> implements Serializable, Iterabl
         }
     }
 
+    public void sortByName() { 
+        Collections.sort(allListTree);
+    }
+
+    public void sortByAge() {
+        Collections.sort(allListTree, new IndividualComporatorByAge<T>());        
+    }
+    
     public List<T> getAllListTree() {
         return allListTree;
     }
