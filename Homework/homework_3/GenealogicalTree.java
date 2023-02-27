@@ -1,12 +1,17 @@
-package Homework.Homework_2;
+package Homework.homework_3;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.io.IOException;
 import java.io.Serializable;
 
+import Homework.homework_3.Service.FileHandler;
+import Homework.homework_3.Service.GenTreeIterator;
+import Homework.homework_3.Service.Writable;
 
-public class GenealogicalTree implements Serializable {
-    private ArrayList<Human> allPeople;
+public class GenealogicalTree implements Serializable, Iterable<Human> {
+    private List<Human> allPeople;
     private Writable writable;
 
     public GenealogicalTree(Writable writable) {
@@ -19,15 +24,7 @@ public class GenealogicalTree implements Serializable {
      * @param somebody человек, которого нужно добавить.
      */
     public void addHuman(Human somebody) {
-        if (!allPeople.contains(somebody)) {
-            allPeople.add(somebody);
-            if (somebody.getFather() != null) {
-                somebody.getFather().addChild(somebody);
-            }
-            if (somebody.getMother() != null) {
-                somebody.getMother().addChild(somebody);
-            }
-        } 
+        allPeople.add(somebody);
     }
 
     /**
@@ -47,21 +44,12 @@ public class GenealogicalTree implements Serializable {
      * Метод печати всех человек из генеалогического древа
      */
     public void printGenTree() {
-        StringBuilder sb = new StringBuilder();
         for (Human human : allPeople) {
-            sb.append("имя ");
-            sb.append(human.getName());
-            sb.append(", мать ");
-            sb.append(human.getMother().getName());
-            sb.append(", отец ");
-            sb.append(human.getFather().getName());
-            sb.append(", дети: ");
-            sb.append(human.getChildrenInfo());
-            System.out.println(sb);
+            System.out.println(human);
         }
     }
 
-    public ArrayList<Human> getAllPeople() {
+    public List<Human> getAllPeople() {
         return allPeople;
     }
 
@@ -88,5 +76,10 @@ public class GenealogicalTree implements Serializable {
             return null;
         }
         return null;
+    }
+
+    @Override
+    public Iterator<Human> iterator() {
+        return new GenTreeIterator(allPeople);
     }
 }

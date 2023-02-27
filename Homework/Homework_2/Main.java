@@ -16,6 +16,17 @@ public class Main {
 
         human2.setName("Анна");
 
+        // human1.setPartner(human2);
+        // // human2.setPartner(human1);
+        // System.out.println(human2.getPartner());
+        // System.out.println(human1.getPartner());
+
+        
+        human1.addChild(human3);
+        human1.addChild(human4);
+
+        System.out.println("-------");
+
         FileHandler fileHandler = new FileHandler();
         GenealogicalTree bigFamily = new GenealogicalTree(fileHandler);
         bigFamily.addHuman(human1);
@@ -25,37 +36,28 @@ public class Main {
         bigFamily.addHuman(human5);
         bigFamily.addHuman(human6);
         bigFamily.printGenTree();
-        System.out.println("-------");
+        // System.out.println("-------");
         
-        human5.setMother(human6);
-        human5.setMother(bigFamily.searchPeople("Инна"));
-        System.out.printf("У матери человека, которого зовут %s, имя %s", 
-            human5.getName(), human5.getMother().getName());
-        System.out.println("\n-------");
+        // human5.setMother(bigFamily.searchPeople("Инна"));
+        // System.out.printf("У матери человека, которого зовут %s, имя %s", 
+        //     human5.getName(), human5.getMother().getName());
+        // System.out.println("\n-------");
 
-        human1.setPartner(human2);
-        human2.setPartner(human1);
-        System.out.println(human2.getPartner());
+        // human2.getChildren();
 
-        
-        human1.addChild(human3);
-        human1.addChild(human4);
-        human1.getChildren();
-        System.out.println("-------");
-
-        human3.setPartner(human6);
-        human6.setPartner(human3);
-        human3.addChild(human5);        
-        human3.getChildren();
-        System.out.println("-------");
+        // human3.setPartner(human6);
+        // human6.setPartner(human3);
+        // human3.addChild(human5);        
+        // human3.getChildren();
+        // System.out.println("-------");
 
         
         // Scanner iScanner = new Scanner(System.in, "Cp866");
         // searchChild(iScanner, bigFamily);
         // iScanner.close();
         
-        fileHandler.save(bigFamily);
-        fileHandler.read();
+        // fileHandler.save(bigFamily);
+        // fileHandler.read();
     }
 
     public static void searchChild(Scanner iScanner, GenealogicalTree bigFamily) {

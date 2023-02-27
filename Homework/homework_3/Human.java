@@ -1,30 +1,33 @@
-package Homework.Homework_2;
+package Homework.homework_3;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
-public class Human implements Serializable{
+public class Human implements Serializable, Comparable<Human> {
+    private int id;
     private String name;
     private Sex sex;
-    private String birthDate;
+    private int birthYear;
     private Human father;
     private Human mother;
     private Human partner;
-    private ArrayList<Human> children;
+    private List<Human> children;
 
-    public Human(String name, Sex sex, String birthDate) {
+    public Human(int id, String name, Sex sex, int birthYear) {
+        this(id, name, sex, birthYear, null, null, null);
+    }
+
+    public Human(int id, String name, Sex sex, int birthYear, 
+        Human father, Human mother, Human partner) {
+        this.id = id;
         this.name = name;
         this.sex = sex;
-        this.birthDate = birthDate;
+        this.birthYear = birthYear;
+        this.father = father;
+        this.mother = mother;
+        this.partner = partner;
         this.children = new ArrayList<>();
-    }
-
-    public Human() {
-        this("Не установлено", null, null);
-    }
-
-    public Human(String name) {
-        this(name, null, null);
     }
 
     /**
@@ -32,11 +35,8 @@ public class Human implements Serializable{
      * @param somebody Ребенок, которого нужно добавить.
      * @param children Список детей человека
      */
-    public ArrayList<Human> addChild (Human somebody) {
-        // this.children.add(partner);
-        if (!this.children.contains(somebody)){
-            this.children.add(somebody);
-        }
+    public List<Human> addChild (Human somebody) {
+        this.children.add(somebody);
         return children;
     }
 
@@ -49,30 +49,20 @@ public class Human implements Serializable{
         } else {
             System.out.printf("%s имеет детей:\n", name);
             for (Human child : children) {
-                System.out.println(child.getName() + " " + child.getBirthDate() + " г.р.");
+                System.out.println(child.getName() + " " + child.getBirthYear() + " г.р.");
             }
-        } 
-    }
-
-    public String getChildrenInfo() {
-        StringBuilder sb = new StringBuilder();
-        if (children.size() != 0) {
-            sb.append(children.get(0).getName());
-            for (int i = 1; i < children.size(); i++) {
-                sb.append(", ");
-                sb.append(children.get(i).getName());
-            }
-        } else {
-            sb.append("отсутствуют");
         }
-        return sb.toString();
+        
     }
-    
-    
 
     @Override
     public String toString() {
-        return String.format("%s, пол %s, %s г.р.", name, sex, birthDate);
+        return String.format("id %d, %s, пол %s, %s г.р.", id, name, sex, birthYear);
+    }
+
+    @Override
+    public int compareTo(Human o) {
+        return name.compareTo(o.name);
     }
 
     public String getName() {
@@ -91,12 +81,12 @@ public class Human implements Serializable{
         this.sex = sex;
     }
 
-    public String getBirthDate() {
-        return birthDate;
+    public int getBirthYear() {
+        return birthYear;
     }
 
-    public void setBirthDate(String birthDate) {
-        this.birthDate = birthDate;
+    public void setBirthYear(int birthYear) {
+        this.birthYear = birthYear;
     }
 
     public Human getFather() {
@@ -121,6 +111,5 @@ public class Human implements Serializable{
 
     public void setPartner(Human partner) {
         this.partner = partner;
-        // partner.setPartner(this.partner);
     }
 }
