@@ -1,10 +1,11 @@
-package Homework.homework_4;
+package Homework.homework_4.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Animal implements Serializable, Comparable<Animal> {
+    private int id;
     private String name;
     private Sex sex;
     private int birthYear;
@@ -13,12 +14,13 @@ public class Animal implements Serializable, Comparable<Animal> {
     private Animal partner;
     private List<Animal> children;
 
-    public Animal(String name, Sex sex, int birthYear) {
-        this(name, sex, birthYear, null, null, null);
+    public Animal(int id, String name, Sex sex, int birthYear) {
+        this(id, name, sex, birthYear, null, null, null);
     }
 
-    public Animal(String name, Sex sex, int birthYear, 
+    public Animal(int id, String name, Sex sex, int birthYear, 
     Animal father, Animal mother, Animal partner) {
+        this.id = id;
         this.name = name;
         this.sex = sex;
         this.birthYear = birthYear;
@@ -34,33 +36,43 @@ public class Animal implements Serializable, Comparable<Animal> {
      * @param children Список детей человека
      */
     public List<Animal> addChild (Animal somebody) {
-        this.children.add(somebody);
+        if (!this.children.contains(somebody)){
+            this.children.add(somebody);
+        }
         return children;
     }
 
-    /**
-     * Метод вывода всех детей указанного человека
-     */
-    public void getChildren() {
-        if (children.size() == 0) {
-            System.out.printf("%s не имеет детей", name);
-        } else {
-            System.out.printf("%s имеет детей:\n", name);
-            for (Animal child : children) {
-                System.out.println(child.getName() + " " + child.getBirthYear() + " г.р.");
+    public List<Animal> getChildren() {
+        return children;
+    }
+
+    public String childrenInfo() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Дети: ");
+        if (children.size() != 0) {
+            sb.append(children.get(0).getName());
+            for (int i = 1; i < children.size(); i++) {
+                sb.append(", ");
+                sb.append(children.get(i).getName());
             }
+        } else {
+            sb.append("отсутствуют");
         }
-        
+        return sb.toString();
     }
 
     @Override
     public String toString() {
-        return String.format("%s, пол %s, %s г.р.", name, sex, birthYear);
+        return String.format("id %d, %s, пол %s, %s г.р.", id, name, sex, birthYear);
     }
     
     @Override
     public int compareTo(Animal o) {
         return name.compareTo(o.name);
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getName() {

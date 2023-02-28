@@ -1,5 +1,5 @@
-package Homework.homework_4.Service;
-import Homework.homework_4.Animal;
+package Homework.homework_4.model.Service;
+import Homework.homework_4.model.Animal;
 
 import java.util.Comparator;
 

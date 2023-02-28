@@ -1,5 +1,13 @@
 package Homework.homework_4;
-import Homework.homework_4.Service.FileHandler;
+import Homework.homework_4.model.GenealogicalTree;
+import Homework.homework_4.model.Human;
+import Homework.homework_4.model.Pet;
+import Homework.homework_4.model.Sex;
+import Homework.homework_4.model.Service.FileHandler;
+import Homework.homework_4.model.Service.GenTreeService;
+import Homework.homework_4.presenter.Presenter;
+import Homework.homework_4.view.Console;
+import Homework.homework_4.view.View;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -9,62 +17,33 @@ public class Main {
     public static void main(String[] args) throws FileNotFoundException, IOException {
         FileHandler<Human> fileHandler = new FileHandler<>();
         GenealogicalTree<Human> bigFamily = new GenealogicalTree<>(fileHandler);
+        GenTreeService genTreeService = new GenTreeService(bigFamily);
+        genTreeService.addIndividual("Федор", Sex.Man, 1947);
+        genTreeService.addIndividual("Анна", Sex.Woman, 1949);
+        genTreeService.addIndividual("Александр", Sex.Man, 1999);
+        genTreeService.addIndividual("Мария", Sex.Man, 2003);
+        genTreeService.addIndividual("Юрий", Sex.Man, 2022);
+        genTreeService.addIndividual("Инна", Sex.Woman, 1999);
         
-        Human human1 = new Human("Федор", Sex.Man, 1947);
-        Human human2 = new Human("Анна", Sex.Woman, 1949);
-        Human human3 = new Human("Александр", Sex.Man, 1999);
-        Human human4 = new Human("Мария", Sex.Woman, 2003);
-        Human human5 = new Human("Юрий", Sex.Man, 2022);
-        Human human6 = new Human("Инна", Sex.Woman, 1999);
-
-        bigFamily.addIndividual(human1);
-        bigFamily.addIndividual(human2);
-        bigFamily.addIndividual(human3);
-        bigFamily.addIndividual(human4);
-        bigFamily.addIndividual(human5);
-        bigFamily.addIndividual(human6);
-
-        // bigFamily.printGenTree();
-        for (Human human : bigFamily) {
-            System.out.println(human);
-        }
+        genTreeService.searchGetHuman("Федор").addChild(
+            genTreeService.searchGetHuman("Александр"));
+        genTreeService.searchGetHuman("Федор").addChild(
+            genTreeService.searchGetHuman("Мария"));
+        genTreeService.searchGetHuman("Александр").addChild(
+            genTreeService.searchGetHuman("Юрий"));
+        
+        FileHandler<Pet> petsFileHandler = new FileHandler<>();
+        GenealogicalTree<Pet> pets = new GenealogicalTree<>(petsFileHandler);
+        pets.addIndividual(new Pet(0, "Кошка", Sex.Woman, 2016));
+        pets.addIndividual(new Pet(1, "Собака", Sex.Man, 2019));
+        System.out.println("Питомцы:");
+        pets.printGenTree();
         System.out.println("-------");
         
-        bigFamily.sortByAge();
-        System.out.println("Сортировка по году рождения");
-        for (Human human : bigFamily) {
-            System.out.println(human);
-        }
-        System.out.println("-------");
+        Scanner iScanner = new Scanner(System.in, "Cp866");
+        View view = new Console(iScanner);
+        Presenter<Human> presenter = new Presenter(view, genTreeService, fileHandler);
 
-        bigFamily.sortByName();
-        System.out.println("Сортировка по имени");
-        for (Human human : bigFamily) {
-            System.out.println(human);
-        }
-
-        // поиск по имени
-
-        // Scanner iScanner = new Scanner(System.in, "Cp866");
-        // searchChild(iScanner, bigFamily);
-        // iScanner.close();
-        
-        // сериализация и десериализация
-
-        // fileHandler.save(bigFamily);
-        // fileHandler.read();
-    }
-
-    public static void searchChild(Scanner iScanner, GenealogicalTree<Human> bigFamily) {
-        System.out.println("-------");
-        System.out.print("Введите имя для поиска: ");
-        String searchName = iScanner.next();
-        if (bigFamily.searchPeople(searchName) == null) {
-            System.out.println("Совпадений не найдено");
-        } else {
-            System.out.printf("Результат поиска: %s найден\n", bigFamily.searchPeople(searchName).getName());
-            bigFamily.searchPeople(searchName).getChildren();
-        }
-        System.out.println("-------");
+        view.start();
     }
 }

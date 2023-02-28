@@ -1,6 +1,6 @@
-package Homework.homework_4.Service;
-import Homework.homework_4.Animal;
-import Homework.homework_4.GenealogicalTree;
+package Homework.homework_4.model.Service;
+import Homework.homework_4.model.Animal;
+import Homework.homework_4.model.GenealogicalTree;
 
 import java.io.Serializable;
 import java.io.FileInputStream;
@@ -41,12 +41,12 @@ public class FileHandler<T extends Animal> implements Writable<T>, Serializable 
      * // Востановление из файла с помощью класса ObjectInputStream
      */
     @Override
-    public GenealogicalTree<T> read() {
+    public Serializable read() {
         System.out.println("Восстановление после сериализации...");
         try {
             FileInputStream inStream = new FileInputStream(fileName);
             ObjectInputStream objectInputStream = new ObjectInputStream(inStream);
-            GenealogicalTree<T> tempTree = (GenealogicalTree<T>) objectInputStream.readObject();
+            Serializable tempTree = (Serializable) objectInputStream.readObject();
             inStream.close();
             objectInputStream.close();
             System.out.println("Успешно!");

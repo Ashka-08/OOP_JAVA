@@ -1,4 +1,4 @@
-package Homework.homework_4.Service;
+package Homework.homework_4.model.Service;
 
 import java.io.Serializable;
 

@@ -1,8 +1,9 @@
-package Homework.homework_4.Service;
-import Homework.homework_4.Animal;
+package Homework.homework_4.model.Service;
 
 import java.util.Iterator;
 import java.util.List;
+
+import Homework.homework_4.model.Animal;
 
 public class GenTreeIterator<T extends Animal> implements Iterator<T> {
     private List<T> allListTree;

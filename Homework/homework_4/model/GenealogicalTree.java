@@ -1,15 +1,13 @@
-package Homework.homework_4;
-import Homework.homework_4.Service.FileHandler;
-import Homework.homework_4.Service.GenTreeIterator;
-import Homework.homework_4.Service.IndividualComporatorByAge;
-import Homework.homework_4.Service.Writable;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
+package Homework.homework_4.model;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import Homework.homework_4.model.Service.GenTreeIterator;
+import Homework.homework_4.model.Service.FileHandler;
+import Homework.homework_4.model.Service.Writable;
 
 public class GenealogicalTree<T extends Animal> implements Serializable, Iterable<T> {
     private List<T> allListTree;
@@ -28,6 +26,23 @@ public class GenealogicalTree<T extends Animal> implements Serializable, Iterabl
         allListTree.add(somebody);
     }
 
+    public boolean addT(T somebody){
+        if (somebody == null){
+            return false;
+        }
+        if (!allListTree.contains(somebody)){
+            allListTree.add(somebody);
+            if (somebody.getFather() != null){
+                somebody.getFather().addChild(somebody);
+            }
+            if (somebody.getMother() != null){
+                somebody.getMother().addChild(somebody);
+            }
+            return true;
+        }
+        return false;
+    }
+
     public void addIndividual(String string, Sex man, int i) {
     }
     
@@ -35,13 +50,32 @@ public class GenealogicalTree<T extends Animal> implements Serializable, Iterabl
      * Метод поиска человека по имени и его детей
      * @param searchName принимает введенное пользователем значение 
      */
-    public T searchPeople (String searchName) {
+    public T searchGetHuman (String searchName) {
         for (T individual : allListTree) {
             if (individual.getName().equals(searchName)) {
                 return individual;
             } 
         }
         return null;
+    }
+    public String searchForName (String searchName) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Результат поиска: \n");
+        T res = null;
+        for (T individual : allListTree) {
+            if (individual.getName().equals(searchName)) {
+                res = individual;
+            } 
+        }
+        if (res != null) {
+            sb.append(res.toString());
+            sb.append("\n");
+            sb.append(res.childrenInfo());
+        } else {
+            sb.append(searchName);
+            sb.append(" не найден");
+        }
+        return sb.toString();
     }
 
     /**
@@ -51,14 +85,6 @@ public class GenealogicalTree<T extends Animal> implements Serializable, Iterabl
         for (T individual : allListTree) {
             System.out.println(individual);
         }
-    }
-
-    public void sortByName() { 
-        Collections.sort(allListTree);
-    }
-
-    public void sortByAge() {
-        Collections.sort(allListTree, new IndividualComporatorByAge<T>());        
     }
     
     public List<T> getAllListTree() {
